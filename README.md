@@ -1,2 +1,3 @@
 # nestjs-study
-nestjs, graphqlの学習
+
+nestjs, graphql の学習のためリポジトリです。
