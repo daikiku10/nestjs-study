@@ -1,12 +1,24 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
 import { AppService } from './app.service';
-import { CatsController } from './cats/cats.controller';
+import { AppResolver } from './app.resolver';
 
 // アプリケーションのルートモジュール
 @Module({
-  imports: [],
-  controllers: [AppController, CatsController],
-  providers: [AppService],
+  imports: [
+    // graphql
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver, // Apollo ServerをGraphQLのドライバーとして使用
+      typePaths: ['./**/*.graphql'], // .graphql スキーマファイルを対象にする
+      playground: true,
+      definitions: {
+        path: join(process.cwd(), 'src/graphql.ts'), // スキーマから TypeScript の型定義を自動生成
+        outputAs: 'class', // 生成する型を class 形式にする
+      },
+    }),
+  ],
+  providers: [AppResolver, AppService],
 })
 export class AppModule {}
