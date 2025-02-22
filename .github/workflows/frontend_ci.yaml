@@ -1,0 +1,50 @@
+name: frontend_ci
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+    paths:
+      - "frontend/**"
+
+jobs:
+  test:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+    # Job間のデータ受け渡しのためだが、ここでは1つのJobなので必要なし
+    # outputs:
+    #   node-version: ${{ steps.set-node-version.outputs.node-version }}
+    env:
+      PROJECT_DIR: frontend/
+    defaults:
+      run:
+        working-directory: ${{ env.PROJECT_DIR }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            ${{ env.PROJECT_DIR }}
+      - name: Get Node.js version form .node-version
+        id: set-node-version
+        run: |
+          echo "node-version=${cat .node-version}" >> $GITHUB_OUTPUT
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ set-node-version.output.node-version}}
+      # TODO: Check cache
+      - name: Install packages
+        run: npm i
+      - name: ESLint
+        run: npm run lint
+      # TODO: Type Check
+      - name: Build
+        run: |
+          npm run build
+          # clean up dist
+          # TODO: rm -rf .dist
+      # TODO: Testing
