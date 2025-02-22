@@ -41,7 +41,8 @@ jobs:
         run: npm i
       - name: ESLint
         run: npm run lint
-      # TODO: Type Check
+      - name: Type Check
+        run: npm run type-check
       - name: Build
         run: |
           npm run build
