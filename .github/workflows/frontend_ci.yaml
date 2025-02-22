@@ -31,7 +31,7 @@ jobs:
       - name: Get Node.js version form .node-version
         id: set-node-version
         run: |
-          echo "node-version=${cat .node-version}" >> $GITHUB_OUTPUT
+          echo "node-version=$(cat .node-version)" >> $GITHUB_OUTPUT
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
