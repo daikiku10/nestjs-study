@@ -35,7 +35,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ set-node-version.output.node-version}}
+          node-version: ${{ steps.set-node-version.outputs.node-version }}
       # TODO: Check cache
       - name: Install packages
         run: npm i
