@@ -1,0 +1,35 @@
+name: 作業チケット
+description: 開発作業をチケットとして起票するためのテンプレート
+# projects:
+#   -
+body:
+  - type: textarea
+    attributes:
+      label: 対応内容
+      description: 作業の概要を記載してください
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 目的
+      description: 作業を行う目的を記載してください
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: 前提条件
+      description: 作業を行うための前提条件を記載してください
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: 完了条件
+      description: 作業の完了条件を記載してください
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: 備考
+      description: 作業に関する備考を記載してください
+    validations:
+      required: false

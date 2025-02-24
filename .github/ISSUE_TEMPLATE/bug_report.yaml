@@ -1,0 +1,35 @@
+name: 不具合報告
+description: 検出された不具合を報告するためのテンプレート
+# projects:
+#   -
+body:
+  - type: textarea
+    attributes:
+      label: 不具合内容
+      description: 不具合内容を記載してください
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 期待する動作
+      description: 不具合が発生しない場合のアプリケーションの動作を記載してください
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 再現環境
+      description: 不具合が発生した環境を記載してください
+      value: |
+        - OS:
+        - ブラウザ:
+        - デバイス:
+        - 環境名:
+        - ユーザーID:
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 備考
+      description: 不具合に関する備考を記載してください
+    validations:
+      required: false
