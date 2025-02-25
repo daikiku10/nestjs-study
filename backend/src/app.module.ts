@@ -4,6 +4,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { AppService } from './app.service';
 import { AppResolver } from './app.resolver';
+import { MongooseModule } from '@nestjs/mongoose';
+import { mongodbRoot } from 'mongodb.config';
 
 // アプリケーションのルートモジュール
 @Module({
@@ -18,6 +20,8 @@ import { AppResolver } from './app.resolver';
         outputAs: 'class', // 生成する型を class 形式にする
       },
     }),
+    // Mongoose
+    MongooseModule.forRoot(mongodbRoot),
   ],
   providers: [AppResolver, AppService],
 })
