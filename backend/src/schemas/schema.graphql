@@ -8,6 +8,14 @@ type User {
   age: Int
 }
 
+type Cat {
+  id: ID!
+  name: String!
+  age: Int!
+  breed: String
+}
+
 type Mutation {
   createUser(name: String!, age: Int): User
+  createCat(name: String!, age: Int!): Cat!
 }
