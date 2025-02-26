@@ -1,6 +1,7 @@
 type Query {
   hello: String
   getAllCats: [Cat]
+  getCatById(id: String!): Cat
 }
 
 type User {

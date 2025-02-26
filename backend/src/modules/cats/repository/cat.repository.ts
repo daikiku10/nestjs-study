@@ -28,4 +28,16 @@ export class CatsRepository {
     });
     return res;
   }
+
+  async findCatById(id: string) {
+    const result = await this.catModel.findOne({ id: id }).exec();
+    // ドメイン変換
+    const res = CatDomain.createForRepository(
+      result.id,
+      result.name,
+      result.age,
+      result.breed,
+    );
+    return res;
+  }
 }

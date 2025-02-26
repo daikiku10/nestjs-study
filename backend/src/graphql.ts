@@ -12,6 +12,8 @@ export abstract class IQuery {
     abstract hello(): Nullable<string> | Promise<Nullable<string>>;
 
     abstract getAllCats(): Nullable<Nullable<Cat>[]> | Promise<Nullable<Nullable<Cat>[]>>;
+
+    abstract getCatById(id: string): Nullable<Cat> | Promise<Nullable<Cat>>;
 }
 
 export class User {
