@@ -20,4 +20,5 @@ type Cat {
 type Mutation {
   createUser(name: String!, age: Int): User
   createCat(name: String!, age: Int!): Cat
+  updateCat(id: String!, name: String!, age: Int!, breed: String!): Cat
 }

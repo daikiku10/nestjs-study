@@ -14,6 +14,18 @@ export class CatsService {
     return this.catsRepo.insert(catDomain);
   }
 
+  async update(id: string, name: string, age: number, breed: string) {
+    // 受け取ったデータを使用してドメイン変換
+    const catDomain = CatDomain.createForRepository(id, name, age, breed);
+
+    // リポジトリ層へ依頼
+    try {
+      return this.catsRepo.update(catDomain);
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
   async findAll() {
     // リポジトリ層へ依頼
     const result = await this.catsRepo.findAll();

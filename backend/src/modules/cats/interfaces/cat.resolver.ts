@@ -54,7 +54,22 @@ export class CatsResolver {
       return result;
     } catch (error) {
       console.log('error', error);
-      return undefined;
+      return error;
+    }
+  }
+
+  @Mutation(() => Object)
+  async updateCat(
+    @Args('id') id: string,
+    @Args('name') name: string,
+    @Args('age') age: number,
+    @Args('breed') breed: string,
+  ) {
+    try {
+      const result = await this.catsService.update(id, name, age, breed);
+      return result;
+    } catch (error) {
+      return error;
     }
   }
 }

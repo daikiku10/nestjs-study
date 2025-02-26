@@ -13,6 +13,21 @@ export class CatsRepository {
     return createdCat.save();
   }
 
+  async update(cat: CatType) {
+    const updateObj = await this.catModel.findOne({ id: cat.id }).exec();
+    if (!updateObj) {
+      throw new Error('更新対象が見つかりませんでした。');
+    }
+    await updateObj
+      .updateOne({
+        name: cat.name,
+        age: cat.age,
+        breed: cat.breed,
+      })
+      .exec();
+    return updateObj;
+  }
+
   async findAll() {
     const result = await this.catModel.find().exec();
     let res: CatType[] = [];
