@@ -55,4 +55,8 @@ export class CatsRepository {
     );
     return res;
   }
+
+  async delete(id: string) {
+    this.catModel.deleteOne({ id: id }).exec();
+  }
 }

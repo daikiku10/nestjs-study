@@ -72,4 +72,14 @@ export class CatsResolver {
       return error;
     }
   }
+
+  @Mutation()
+  async deleteCat(@Args('id') id: string) {
+    try {
+      await this.catsService.deleteCatById(id);
+      return;
+    } catch (error) {
+      return error;
+    }
+  }
 }

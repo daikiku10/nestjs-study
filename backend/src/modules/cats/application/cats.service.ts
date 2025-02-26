@@ -37,4 +37,10 @@ export class CatsService {
     const result = await this.catsRepo.findCatById(id);
     return result;
   }
+
+  async deleteCatById(id: string) {
+    // リポジトリ層へ依頼
+    await this.catsRepo.delete(id);
+    return;
+  }
 }

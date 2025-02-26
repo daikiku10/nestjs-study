@@ -35,6 +35,8 @@ export abstract class IMutation {
     abstract createCat(name: string, age: number): Nullable<Cat> | Promise<Nullable<Cat>>;
 
     abstract updateCat(id: string, name: string, age: number, breed: string): Nullable<Cat> | Promise<Nullable<Cat>>;
+
+    abstract deleteCat(id: string): Nullable<string> | Promise<Nullable<string>>;
 }
 
 type Nullable<T> = T | null;
