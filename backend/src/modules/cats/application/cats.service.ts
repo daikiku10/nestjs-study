@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Cat } from '../repository/cat.schema';
-import { Cat as CatDomain } from '../domain/cat';
+import { Cat as CatDomain, CatType } from '../domain/cat';
 import { CatsRepository } from '../repository/cat.repository';
 
 @Injectable() // アプリケーション層
@@ -15,7 +15,9 @@ export class CatsService {
     return this.catsRepo.insert(catDomain);
   }
 
-  // async findAll(): Promise<Cat[]> {
-  //   return this.catModel.find().exec();
-  // }
+  async findAll(): Promise<CatType[]> {
+    // リポジトリ層へ依頼
+    const result = await this.catsRepo.findAll();
+    return result;
+  }
 }

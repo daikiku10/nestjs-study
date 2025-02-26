@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CatsService } from '../application/cats.service';
 import { Cat } from 'src/graphql';
 
@@ -6,18 +6,26 @@ import { Cat } from 'src/graphql';
 export class CatsResolver {
   constructor(private readonly catsService: CatsService) {}
 
-  // @Query(() => String)
-  // async getCats(): Promise<string> {
-  //   console.log('getCatsの呼び出し');
-  //   try {
-  //     const result = await this.catsService.findAll();
-  //     console.log('result', result);
-  //     return '成功';
-  //   } catch (error) {
-  //     console.log('error', error);
-  //     return '失敗';
-  //   }
-  // }
+  @Query(() => Object)
+  async getAllCats(): Promise<Cat[]> {
+    try {
+      const result = await this.catsService.findAll();
+      let res: Cat[] = [];
+      result.forEach((item) => {
+        const cat = {
+          id: item.id,
+          name: item.name,
+          age: item.age,
+          breed: item.breed,
+        } satisfies Cat;
+        res = [...res, cat];
+      });
+      return res;
+    } catch (error) {
+      console.log('error', error);
+      return undefined;
+    }
+  }
 
   @Mutation(() => Object)
   async createCat(

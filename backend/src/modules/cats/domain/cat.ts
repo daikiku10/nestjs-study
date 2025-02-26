@@ -19,4 +19,13 @@ export class Cat implements CatType {
     // バリデーションをここに追加
     return new Cat(uuidv4(), name, age, breed);
   }
+
+  static createForRepository(
+    id: string,
+    name: string,
+    age: number,
+    breed: string,
+  ): Cat {
+    return new Cat(id, name, age, breed);
+  }
 }
