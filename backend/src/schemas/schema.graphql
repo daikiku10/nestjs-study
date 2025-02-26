@@ -1,5 +1,6 @@
 type Query {
   hello: String
+  getCats: String
 }
 
 type User {
@@ -17,5 +18,5 @@ type Cat {
 
 type Mutation {
   createUser(name: String!, age: Int): User
-  createCat(name: String!, age: Int!): Cat!
+  createCat(name: String!, age: Int!): Cat
 }

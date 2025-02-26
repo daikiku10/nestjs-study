@@ -2,10 +2,9 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import { AppService } from './app.service';
-import { AppResolver } from './app.resolver';
 import { MongooseModule } from '@nestjs/mongoose';
-import { mongodbRoot } from 'mongodb.config';
+import { mongodbRoot } from 'src/config/mongodb.config';
+import { CatsModule } from './modules/cats/cat.module';
 
 // アプリケーションのルートモジュール
 @Module({
@@ -22,7 +21,8 @@ import { mongodbRoot } from 'mongodb.config';
     }),
     // Mongoose
     MongooseModule.forRoot(mongodbRoot),
+    // catsモジュール
+    CatsModule,
   ],
-  providers: [AppResolver, AppService],
 })
 export class AppModule {}

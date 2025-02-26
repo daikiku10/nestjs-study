@@ -10,6 +10,8 @@
 
 export abstract class IQuery {
     abstract hello(): Nullable<string> | Promise<Nullable<string>>;
+
+    abstract getCats(): Nullable<string> | Promise<Nullable<string>>;
 }
 
 export class User {
@@ -28,7 +30,7 @@ export class Cat {
 export abstract class IMutation {
     abstract createUser(name: string, age?: Nullable<number>): Nullable<User> | Promise<Nullable<User>>;
 
-    abstract createCat(name: string, age: number): Cat | Promise<Cat>;
+    abstract createCat(name: string, age: number): Nullable<Cat> | Promise<Nullable<Cat>>;
 }
 
 type Nullable<T> = T | null;
