@@ -32,22 +32,22 @@ export class CatsResolver {
   //   return undefined;
   // }
 
-  // @Query(() => Object)
-  // async getCatById(@Args('id') id: string) {
-  //   try {
-  //     const result = await this.catsService.findCatById(id);
-  //     const cat = {
-  //       id: result.id,
-  //       name: result.name,
-  //       age: result.age,
-  //       breed: result.breed,
-  //     } satisfies Cat;
-  //     return cat;
-  //   } catch (error) {
-  //     console.log('error', error);
-  //     return undefined;
-  //   }
-  // }
+  @Query(() => CatModel)
+  async getCatById(@Args('id') id: string) {
+    try {
+      const result = await this.catsService.findCatById(id);
+      const cat = {
+        id: result.id,
+        name: result.name,
+        age: result.age,
+        breed: result.breed,
+      } satisfies CatModel;
+      return cat;
+    } catch (error) {
+      console.log('error', error);
+      return undefined;
+    }
+  }
   @Mutation(() => String)
   async createCat(
     @Args('name') name: string,

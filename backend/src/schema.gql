@@ -6,10 +6,12 @@ type CatModel {
   id: String!
   name: String!
   age: Float!
+  breed: String
 }
 
 type Query {
   getAllCats: CatModel!
+  getCatById(id: String!): CatModel!
 }
 
 type Mutation {

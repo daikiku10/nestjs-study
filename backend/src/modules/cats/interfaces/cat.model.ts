@@ -10,4 +10,7 @@ export class CatModel {
 
   @Field(() => Number)
   age: number;
+
+  @Field(() => String, { nullable: true })
+  breed?: string;
 }

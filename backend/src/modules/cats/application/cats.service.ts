@@ -29,11 +29,11 @@ export class CatsService {
   //   const result = await this.catsRepo.findAll();
   //   return result;
   // }
-  // async findCatById(id: string) {
-  //   // リポジトリ層へ依頼
-  //   const result = await this.catsRepo.findCatById(id);
-  //   return result;
-  // }
+  async findCatById(id: string) {
+    // リポジトリ層へ依頼
+    const result = await this.catsRepository.findCatById(id);
+    return result;
+  }
   async deleteCatById(id: string) {
     // リポジトリ層へ依頼
     await this.catsRepository.delete(id);
