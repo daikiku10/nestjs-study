@@ -1,0 +1,17 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type CatModel {
+  id: String!
+  name: String!
+  age: Float!
+}
+
+type Query {
+  getAllCats: CatModel!
+}
+
+type Mutation {
+  createCat(name: String!, age: Float!): String!
+}

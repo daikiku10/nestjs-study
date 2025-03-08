@@ -12,12 +12,8 @@ import { CatsModule } from './modules/cats/cat.module';
     // graphql
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver, // Apollo ServerをGraphQLのドライバーとして使用
-      typePaths: ['./**/*.graphql'], // .graphql スキーマファイルを対象にする
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // コードファースト採用
       playground: true,
-      definitions: {
-        path: join(process.cwd(), 'src/graphql.ts'), // スキーマから TypeScript の型定義を自動生成
-        outputAs: 'class', // 生成する型を class 形式にする
-      },
     }),
     // Mongoose
     MongooseModule.forRoot(mongodbRoot),
