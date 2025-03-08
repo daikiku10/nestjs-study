@@ -29,21 +29,21 @@ export class CatsRepository {
       .exec();
     return updateObj;
   }
-  //   async findAll() {
-  //     const result = await this.catModel.find().exec();
-  //     let res: CatType[] = [];
-  //     // ドメイン変換
-  //     result.forEach((item) => {
-  //       const cat = CatDomain.createForRepository(
-  //         item.id,
-  //         item.name,
-  //         item.age,
-  //         item.breed,
-  //       );
-  //       res = [...res, cat];
-  //     });
-  //     return res;
-  //   }
+  async findAll() {
+    const result = await this.catDocument.find().exec();
+    let res: CatType[] = [];
+    // ドメイン変換
+    result.forEach((item) => {
+      const cat = CatDomain.createForRepository(
+        item.id,
+        item.name,
+        item.age,
+        item.breed,
+      );
+      res = [...res, cat];
+    });
+    return res;
+  }
   async findCatById(id: string) {
     const result = await this.catDocument.findOne({ id: id }).exec();
     // ドメイン変換

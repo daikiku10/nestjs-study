@@ -8,32 +8,28 @@ export class CatsResolver {
     console.log('CatsResolver生成', catsService);
   }
 
-  @Query(() => CatModel)
-  getAllCats(): CatModel {
-    // service層へ依頼
-    // ドメインからモデルへ変換
-    return { id: 'daiki', name: 'daiki', age: 12 };
+  @Query(() => [CatModel])
+  async getAllCats(): Promise<CatModel[]> {
+    try {
+      const result = await this.catsService.findAll();
+      let res: CatModel[] = [];
+      result.forEach((item) => {
+        const cat = {
+          id: item.id,
+          name: item.name,
+          age: item.age,
+          breed: item.breed,
+        } satisfies CatModel;
+        res = [...res, cat];
+      });
+      return res;
+    } catch (error) {
+      console.log('error', error);
+      return undefined;
+    }
   }
-  // try {
-  //   const result = await this.catsService.findAll();
-  //   let res: Cat[] = [];
-  //   result.forEach((item) => {
-  //     const cat = {
-  //       id: item.id,
-  //       name: item.name,
-  //       age: item.age,
-  //       breed: item.breed,
-  //     } satisfies Cat;
-  //     res = [...res, cat];
-  //   });
-  //   return res;
-  // } catch (error) {
-  //   console.log('error', error);
-  //   return undefined;
-  // }
-
   @Query(() => CatModel)
-  async getCatById(@Args('id') id: string) {
+  async getCatById(@Args('id') id: string): Promise<CatModel> {
     try {
       const result = await this.catsService.findCatById(id);
       const cat = {

@@ -24,11 +24,11 @@ export class CatsService {
       throw new Error(e);
     }
   }
-  // async findAll() {
-  //   // リポジトリ層へ依頼
-  //   const result = await this.catsRepo.findAll();
-  //   return result;
-  // }
+  async findAll() {
+    // リポジトリ層へ依頼
+    const result = await this.catsRepository.findAll();
+    return result;
+  }
   async findCatById(id: string) {
     // リポジトリ層へ依頼
     const result = await this.catsRepository.findCatById(id);

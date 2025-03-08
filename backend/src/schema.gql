@@ -10,7 +10,7 @@ type CatModel {
 }
 
 type Query {
-  getAllCats: CatModel!
+  getAllCats: [CatModel!]!
   getCatById(id: String!): CatModel!
 }
 
