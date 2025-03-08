@@ -79,13 +79,13 @@ export class CatsResolver {
       return error;
     }
   }
-  // @Mutation()
-  // async deleteCat(@Args('id') id: string) {
-  //   try {
-  //     await this.catsService.deleteCatById(id);
-  //     return;
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // }
+  @Mutation(() => String)
+  async deleteCat(@Args('id') id: string) {
+    try {
+      await this.catsService.deleteCatById(id);
+      return '削除成功';
+    } catch (error) {
+      return error;
+    }
+  }
 }
