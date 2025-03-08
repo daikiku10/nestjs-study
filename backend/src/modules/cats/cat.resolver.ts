@@ -63,20 +63,22 @@ export class CatsResolver {
       return error;
     }
   }
-  // @Mutation(() => Object)
-  // async updateCat(
-  //   @Args('id') id: string,
-  //   @Args('name') name: string,
-  //   @Args('age') age: number,
-  //   @Args('breed') breed: string,
-  // ) {
-  //   try {
-  //     const result = await this.catsService.update(id, name, age, breed);
-  //     return result;
-  //   } catch (error) {
-  //     return error;
-  //   }
-  // }
+
+  @Mutation(() => String)
+  async updateCat(
+    @Args('id') id: string,
+    @Args('name') name: string,
+    @Args('age') age: number,
+    @Args('breed') breed: string,
+  ) {
+    try {
+      const result = await this.catsService.update(id, name, age, breed);
+      console.log(result);
+      return '成功';
+    } catch (error) {
+      return error;
+    }
+  }
   // @Mutation()
   // async deleteCat(@Args('id') id: string) {
   //   try {
