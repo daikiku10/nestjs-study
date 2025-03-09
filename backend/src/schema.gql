@@ -5,7 +5,7 @@
 type CatModel {
   id: String!
   name: String!
-  age: Float!
+  age: Int!
   breed: String
 }
 
@@ -15,7 +15,12 @@ type Query {
 }
 
 type Mutation {
-  createCat(name: String!, age: Float!): String!
+  createCat(input: CatRequest!): String!
   updateCat(id: String!, name: String!, age: Float!, breed: String!): String!
   deleteCat(id: String!): String!
+}
+
+input CatRequest {
+  name: String!
+  age: Int!
 }

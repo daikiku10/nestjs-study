@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class CatModel {
@@ -8,9 +8,18 @@ export class CatModel {
   @Field(() => String)
   name: string;
 
-  @Field(() => Number)
+  @Field(() => Int)
   age: number;
 
   @Field(() => String, { nullable: true })
   breed?: string;
+}
+
+@InputType()
+export class CatRequest {
+  @Field(() => String)
+  name: string;
+
+  @Field(() => Int)
+  age: number;
 }

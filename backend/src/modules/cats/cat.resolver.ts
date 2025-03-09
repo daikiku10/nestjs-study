@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CatsService } from './application/cats.service';
-import { CatModel } from './interfaces/cat.model';
+import { CatModel, CatRequest } from './interfaces/cat.model';
 
 @Resolver()
 export class CatsResolver {
@@ -45,13 +45,14 @@ export class CatsResolver {
     }
   }
   @Mutation(() => String)
-  async createCat(
-    @Args('name') name: string,
-    @Args('age') age: number,
-  ): Promise<string> {
+  async createCat(@Args('input') input: CatRequest): Promise<string> {
     console.log('リクエスト');
     try {
-      const result = await this.catsService.create(name, age, 'スコティッシュ');
+      const result = await this.catsService.create(
+        input.name,
+        input.age,
+        'スコティッシュ',
+      );
       console.log(result);
       return '成功';
     } catch (error) {
