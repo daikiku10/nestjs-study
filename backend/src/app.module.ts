@@ -13,6 +13,7 @@ import { CatsModule } from './modules/cats/cat.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver, // Apollo ServerをGraphQLのドライバーとして使用
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // コードファースト採用
+      sortSchema: true,
       playground: true,
     }),
     // Mongoose
