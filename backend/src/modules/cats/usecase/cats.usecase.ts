@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { Cat as CatDomain } from '../domain/cat';
 import { CatsRepository } from '../repository/cat.repository';
+import { CatDaService } from '../service/cat.service';
 
 @Injectable() // アプリケーション層
 export class CatsUsecase {
-  constructor(private readonly catsRepository: CatsRepository) {
-    console.log('CatsService生成');
+  constructor(
+    private readonly catsRepository: CatsRepository,
+    private readonly catsDaService: CatDaService,
+  ) {
+    console.log('CatsUsecase生成');
   }
 
   async create(name: string, age: number, breed: string) {
@@ -26,6 +30,7 @@ export class CatsUsecase {
   }
   async findAll() {
     // リポジトリ層へ依頼
+    this.catsDaService.execute();
     const result = await this.catsRepository.findAll();
     return result;
   }
