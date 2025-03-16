@@ -3,7 +3,7 @@ import { Cat as CatDomain } from '../domain/cat';
 import { CatsRepository } from '../repository/cat.repository';
 
 @Injectable() // アプリケーション層
-export class CatsService {
+export class CatsUsecase {
   constructor(private readonly catsRepository: CatsRepository) {
     console.log('CatsService生成');
   }

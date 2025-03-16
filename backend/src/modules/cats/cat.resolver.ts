@@ -1,10 +1,10 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CatsService } from './application/cats.service';
+import { CatsUsecase } from './usecase/cats.usecase';
 import { CatModel, CatRequest } from './interfaces/cat.model';
 
 @Resolver()
 export class CatsResolver {
-  constructor(private readonly catsService: CatsService) {
+  constructor(private readonly catsService: CatsUsecase) {
     console.log('CatsResolver生成', catsService);
   }
 
