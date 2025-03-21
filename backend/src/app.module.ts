@@ -1,11 +1,10 @@
 import { Module, ModuleMetadata } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { join } from 'path';
 import { MongooseModule } from '@nestjs/mongoose';
 import { mongodbRoot } from 'src/config/mongodb.config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CatsModule } from './modules/cats/cat.module';
-import { ConfigModule } from '@nestjs/config';
 
 function createMetadata(): ModuleMetadata {
   return {
@@ -14,28 +13,34 @@ function createMetadata(): ModuleMetadata {
       ConfigModule.forRoot({
         envFilePath: ['.env.local', '.env'],
       }),
+      // graphQLモジュール
+      GraphQLModule.forRootAsync<ApolloDriverConfig>({
+        driver: ApolloDriver, // Apollo ServerをGraphQLのドライバーとして使用
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: async (configService: ConfigService) => {
+          console.log('graphql-factory', configService);
+          return {
+            playground: true,
+            autoSchemaFile: {
+              path: 'src/schema.gql',
+            },
+            // sortSchema: true,
+            // installSubscriptionHandlers: true, // サブスクリプションを有効(廃止予定)
+            // subscriptions: {
+            //   'graphql-ws': true,
+            // },
+          };
+        },
+      }),
+      // Mongoose
+      MongooseModule.forRoot(mongodbRoot),
+      // catsモジュール
+      CatsModule,
     ],
   };
 }
 
 // アプリケーションのルートモジュール
-@Module({
-  imports: [
-    // graphql
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver, // Apollo ServerをGraphQLのドライバーとして使用
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // コードファースト採用
-      sortSchema: true,
-      playground: true,
-      installSubscriptionHandlers: true, // サブスクリプションを有効(廃止予定)
-      subscriptions: {
-        'graphql-ws': true,
-      },
-    }),
-    // Mongoose
-    MongooseModule.forRoot(mongodbRoot),
-    // catsモジュール
-    CatsModule,
-  ],
-})
+@Module(createMetadata())
 export class AppModule {}

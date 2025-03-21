@@ -3,24 +3,29 @@
 # ------------------------------------------------------
 
 type CatModel {
-  age: Int!
-  breed: String
   id: String!
   name: String!
-}
-
-input CatRequest {
   age: Int!
-  name: String!
-}
-
-type Mutation {
-  createCat(input: CatRequest!): String!
-  deleteCat(id: String!): String!
-  updateCat(age: Float!, breed: String!, id: String!, name: String!): String!
+  breed: String
 }
 
 type Query {
   getAllCats: [CatModel!]!
   getCatById(id: String!): CatModel!
+}
+
+type Mutation {
+  createCat(input: CatRequest!): String!
+  updateCat(id: String!, name: String!, age: Float!, breed: String!): String!
+  deleteCat(id: String!): String!
+  addCat(name: String!): String!
+}
+
+input CatRequest {
+  name: String!
+  age: Int!
+}
+
+type Subscription {
+  catAdded: String!
 }
