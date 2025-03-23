@@ -14,10 +14,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n      query GetAllCats {\n        getAllCats {\n          id\n          name\n          age\n          breed\n        }\n      }\n    ": typeof types.GetAllCatsDocument,
+    "\n      query GetAllCats {\n        getAllCats {\n          id\n          name\n          age\n        }\n        getCatById(id: \"2c71d7cd-bafc-45b8-8598-2c593cdd346b\") {\n          id\n          name\n        }\n      }\n    ": typeof types.GetAllCatsDocument,
 };
 const documents: Documents = {
-    "\n      query GetAllCats {\n        getAllCats {\n          id\n          name\n          age\n          breed\n        }\n      }\n    ": types.GetAllCatsDocument,
+    "\n      query GetAllCats {\n        getAllCats {\n          id\n          name\n          age\n        }\n        getCatById(id: \"2c71d7cd-bafc-45b8-8598-2c593cdd346b\") {\n          id\n          name\n        }\n      }\n    ": types.GetAllCatsDocument,
 };
 
 /**
@@ -37,7 +37,7 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n      query GetAllCats {\n        getAllCats {\n          id\n          name\n          age\n          breed\n        }\n      }\n    "): (typeof documents)["\n      query GetAllCats {\n        getAllCats {\n          id\n          name\n          age\n          breed\n        }\n      }\n    "];
+export function graphql(source: "\n      query GetAllCats {\n        getAllCats {\n          id\n          name\n          age\n        }\n        getCatById(id: \"2c71d7cd-bafc-45b8-8598-2c593cdd346b\") {\n          id\n          name\n        }\n      }\n    "): (typeof documents)["\n      query GetAllCats {\n        getAllCats {\n          id\n          name\n          age\n        }\n        getCatById(id: \"2c71d7cd-bafc-45b8-8598-2c593cdd346b\") {\n          id\n          name\n        }\n      }\n    "];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

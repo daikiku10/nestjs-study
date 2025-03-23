@@ -3,18 +3,22 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import { gql, useQuery } from "@apollo/client";
+import { GetAllCatsQuery } from "./gql/graphql";
 
 function App() {
   const [count, setCount] = useState(0);
 
-  const { loading, error, data } = useQuery(
+  const { loading, error, data } = useQuery<GetAllCatsQuery>(
     gql`
       query GetAllCats {
         getAllCats {
           id
           name
           age
-          breed
+        }
+        getCatById(id: "2c71d7cd-bafc-45b8-8598-2c593cdd346b") {
+          id
+          name
         }
       }
     `
