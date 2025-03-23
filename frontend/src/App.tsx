@@ -9,8 +9,13 @@ function App() {
 
   const { loading, error, data } = useQuery(
     gql`
-      query GetLocations {
-        hello
+      query GetAllCats {
+        getAllCats {
+          id
+          name
+          age
+          breed
+        }
       }
     `
   );
