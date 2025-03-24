@@ -18,14 +18,9 @@ type Mutation {
   createCat(input: CatRequest!): String!
   updateCat(id: String!, name: String!, age: Float!, breed: String!): String!
   deleteCat(id: String!): String!
-  addCat(name: String!): String!
 }
 
 input CatRequest {
   name: String!
   age: Int!
-}
-
-type Subscription {
-  catAdded: String!
 }

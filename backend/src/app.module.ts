@@ -5,6 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { mongodbRoot } from 'src/config/mongodb.config';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CatsModule } from './modules/cats/cat.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { SharelibModule } from './modules/@sharelib/sharelib.module';
 
 function createMetadata(): ModuleMetadata {
   return {
@@ -12,6 +14,10 @@ function createMetadata(): ModuleMetadata {
       // Configモジュール
       ConfigModule.forRoot({
         envFilePath: ['.env.local', '.env'],
+      }),
+      // イベント駆動サポートのモジュール
+      EventEmitterModule.forRoot({
+        wildcard: true,
       }),
       // graphQLモジュール
       GraphQLModule.forRootAsync<ApolloDriverConfig>({
@@ -25,11 +31,6 @@ function createMetadata(): ModuleMetadata {
             autoSchemaFile: {
               path: 'src/schema.gql',
             },
-            // sortSchema: true,
-            // installSubscriptionHandlers: true, // サブスクリプションを有効(廃止予定)
-            // subscriptions: {
-            //   'graphql-ws': true,
-            // },
           };
         },
       }),
@@ -37,6 +38,7 @@ function createMetadata(): ModuleMetadata {
       MongooseModule.forRoot(mongodbRoot),
       // catsモジュール
       CatsModule,
+      SharelibModule,
     ],
   };
 }
