@@ -29,15 +29,17 @@
     "@nestjs/graphql": "^13.0.2",
     "@nestjs/mongoose": "^11.0.1",
     "@nestjs/platform-express": "^11.0.8",
+    "@nestjs/typeorm": "^11.0.0",
     "dotenv": "^16.4.7",
     "graphql": "^16.10.0",
     "graphql-subscriptions": "^3.0.0",
     "graphql-ws": "^6.0.4",
-    "mongodb": "^6.13.1",
+    "mongodb": "^5.8.0",
     "mongoose": "^8.10.1",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "ts-morph": "^25.0.1",
+    "typeorm": "^0.3.21",
     "uuid": "^11.1.0"
   },
   "devDependencies": {
