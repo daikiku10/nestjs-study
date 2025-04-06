@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CatsModule } from './modules/cats/cat.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { SharelibModule } from './modules/@sharelib/sharelib.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 function createMetadata(): ModuleMetadata {
   return {
@@ -18,6 +19,26 @@ function createMetadata(): ModuleMetadata {
       // イベント駆動サポートのモジュール
       EventEmitterModule.forRoot({
         wildcard: true,
+      }),
+      // typeormモジュール
+      TypeOrmModule.forRootAsync({
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: async (configService: ConfigService) => {
+          console.log('Typeorm生成');
+          return {
+            type: 'mongodb',
+            database: configService.get('MONGO_DATABASE'),
+            url: `mongodb+srv://${configService.get('MONGO_USER')}:${configService.get('MONGO_PASSWORD')}@${configService.get('APP_NAME')}.h2v5z.mongodb.net/?retryWrites=true&w=majority&appName=${configService.get('APP_NAME')}`,
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true,
+            autoLoadEntities: true,
+            // migrations:
+            // migrationsRun:
+            // synchronize: true,
+            // logging:
+          };
+        },
       }),
       // graphQLモジュール
       GraphQLModule.forRootAsync<ApolloDriverConfig>({
