@@ -3,9 +3,16 @@
 # ------------------------------------------------------
 
 type CatModel {
-  id: String!
+  """猫ID"""
+  id: ID!
+
+  """名前"""
   name: String!
+
+  """年齢"""
   age: Int!
+
+  """品種"""
   breed: String
 }
 
@@ -15,12 +22,7 @@ type Query {
 }
 
 type Mutation {
-  createCat(input: CatRequest!): String!
+  createCat(input: String!): String!
   updateCat(id: String!, name: String!, age: Float!, breed: String!): String!
   deleteCat(id: String!): String!
-}
-
-input CatRequest {
-  name: String!
-  age: Int!
 }
