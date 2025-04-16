@@ -1,60 +1,37 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CatsUsecase } from './usecase/cats.usecase';
-import { CatModel, CatRequest } from './interfaces/cat.model';
+import { GetCatsUsecase } from './usecase/get-cats.usecase';
+
+import { Cat } from 'src/domains/cat/cat.entity';
+import { CatModel } from 'src/domains/cat/cat.model';
 
 @Resolver()
 export class CatsResolver {
-  constructor(private readonly catsService: CatsUsecase) {
+  constructor(
+    private readonly catsService: CatsUsecase,
+    private readonly getCatsUsecase: GetCatsUsecase,
+  ) {
     console.log('CatsResolver生成', catsService);
   }
 
   @Query(() => [CatModel])
-  async getAllCats(): Promise<CatModel[]> {
-    try {
-      const result = await this.catsService.findAll();
-      let res: CatModel[] = [];
-      result.forEach((item) => {
-        const cat = {
-          id: item.id,
-          name: item.name,
-          age: item.age,
-          breed: item.breed,
-        } satisfies CatModel;
-        res = [...res, cat];
-      });
-      return res;
-    } catch (error) {
-      console.log('error', error);
-      return undefined;
-    }
+  async getAllCats(): Promise<Cat[]> {
+    return this.getCatsUsecase.execute();
   }
+
   @Query(() => CatModel)
   async getCatById(@Args('id') id: string): Promise<CatModel> {
     try {
-      const result = await this.catsService.findCatById(id);
-      const cat = {
-        id: result.id,
-        name: result.name,
-        age: result.age,
-        breed: result.breed,
-      } satisfies CatModel;
-      return cat;
+      console.log('getCatById', id);
     } catch (error) {
       console.log('error', error);
       return undefined;
     }
   }
   @Mutation(() => String)
-  async createCat(@Args('input') input: CatRequest): Promise<string> {
-    console.log('リクエスト');
+  async createCat(@Args('input') input: string): Promise<string> {
     try {
-      const result = await this.catsService.create(
-        input.name,
-        input.age,
-        'スコティッシュ',
-      );
-      console.log(result);
-      return '成功';
+      console.log('createCat', input);
     } catch (error) {
       console.log('error', error);
       return error;
@@ -69,9 +46,7 @@ export class CatsResolver {
     @Args('breed') breed: string,
   ) {
     try {
-      const result = await this.catsService.update(id, name, age, breed);
-      console.log(result);
-      return '成功';
+      console.log('updateCat', id, name, age, breed);
     } catch (error) {
       return error;
     }
@@ -79,8 +54,7 @@ export class CatsResolver {
   @Mutation(() => String)
   async deleteCat(@Args('id') id: string) {
     try {
-      await this.catsService.deleteCatById(id);
-      return '削除成功';
+      console.log('deleteCat', id);
     } catch (error) {
       return error;
     }
