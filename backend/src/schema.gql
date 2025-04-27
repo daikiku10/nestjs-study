@@ -2,6 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Cat {
+  """猫ID"""
+  id: ID!
+
+  """名前"""
+  name: String!
+
+  """年齢"""
+  age: Int!
+
+  """品種"""
+  breed: String
+}
+
 type CatModel {
   """猫ID"""
   id: ID!
@@ -22,7 +36,18 @@ type Query {
 }
 
 type Mutation {
-  createCat(input: String!): String!
+  createCat(props: CreateCatInput!): Cat!
   updateCat(id: String!, name: String!, age: Float!, breed: String!): String!
   deleteCat(id: String!): String!
+}
+
+input CreateCatInput {
+  """猫の名前"""
+  name: String!
+
+  """猫の年齢"""
+  age: Int!
+
+  """品種"""
+  breed: String
 }

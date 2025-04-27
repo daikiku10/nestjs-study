@@ -19,34 +19,6 @@ export class CatsUsecase {
   ) {
     console.log('CatsUsecase生成');
   }
-
-  async create(name: string, age: number, breed: string) {
-    // 受け取ったデータを使用してドメイン変換
-    const catDomain = CatDomain.create(name, age, breed);
-    // イベント仮登録
-    await this.eventEmitter.emitAsync('cat.created', 'testDaiki');
-
-    const cat = new Cat({
-      name: 'daiki',
-      age: 21,
-      breed: 'test',
-    });
-    const res = await this.catRepository.bulkWrite([
-      {
-        updateOne: {
-          filter: { id: cat.id },
-          update: {
-            $set: cat,
-          },
-          upsert: true,
-        },
-      },
-    ]);
-    console.log('res', res);
-
-    // リポジトリ層へ依頼
-    return this.catsRepository.insert(catDomain);
-  }
   async update(id: string, name: string, age: number, breed: string) {
     // 受け取ったデータを使用してドメイン変換
     const catDomain = CatDomain.createForRepository(id, name, age, breed);

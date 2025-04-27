@@ -1,18 +1,17 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CatsUsecase } from './usecase/cats.usecase';
 import { GetCatsUsecase } from './usecase/get-cats.usecase';
 
 import { Cat } from 'src/domains/cat/cat.entity';
 import { CatModel } from 'src/domains/cat/cat.model';
+import { CreateCatUsecase } from './usecase/create-cat.usecase';
+import { CreateCatInput } from './models/create-cat.input';
 
 @Resolver()
 export class CatsResolver {
   constructor(
-    private readonly catsService: CatsUsecase,
     private readonly getCatsUsecase: GetCatsUsecase,
-  ) {
-    console.log('CatsResolver生成', catsService);
-  }
+    private readonly createCatUsecase: CreateCatUsecase,
+  ) {}
 
   @Query(() => [CatModel])
   async getAllCats(): Promise<Cat[]> {
@@ -28,14 +27,10 @@ export class CatsResolver {
       return undefined;
     }
   }
-  @Mutation(() => String)
-  async createCat(@Args('input') input: string): Promise<string> {
-    try {
-      console.log('createCat', input);
-    } catch (error) {
-      console.log('error', error);
-      return error;
-    }
+
+  @Mutation(() => Cat)
+  async createCat(@Args('props') props: CreateCatInput): Promise<Cat> {
+    return this.createCatUsecase.execute(props);
   }
 
   @Mutation(() => String)
