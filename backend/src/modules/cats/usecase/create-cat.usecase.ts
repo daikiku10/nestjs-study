@@ -16,7 +16,6 @@ export class CreateCatUsecase {
     const cat = Cat.new(props);
 
     await bulkSave(this.catRepository, [cat]);
-    console.log(cat);
     return cat;
   }
 }

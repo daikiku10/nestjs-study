@@ -37,11 +37,25 @@ type Query {
 
 type Mutation {
   createCat(props: CreateCatInput!): Cat!
-  updateCat(id: String!, name: String!, age: Float!, breed: String!): String!
+  updateCat(props: UpdateCatInput!): Cat!
   deleteCat(id: String!): String!
 }
 
 input CreateCatInput {
+  """猫の名前"""
+  name: String!
+
+  """猫の年齢"""
+  age: Int!
+
+  """品種"""
+  breed: String
+}
+
+input UpdateCatInput {
+  """ID"""
+  id: ID!
+
   """猫の名前"""
   name: String!
 

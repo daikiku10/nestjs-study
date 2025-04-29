@@ -5,12 +5,15 @@ import { Cat } from 'src/domains/cat/cat.entity';
 import { CatModel } from 'src/domains/cat/cat.model';
 import { CreateCatUsecase } from './usecase/create-cat.usecase';
 import { CreateCatInput } from './models/create-cat.input';
+import { UpdateCatInput } from './models/update-cat.input';
+import { UpdateCatUsecase } from './usecase/update-cat.usecase';
 
 @Resolver()
 export class CatsResolver {
   constructor(
     private readonly getCatsUsecase: GetCatsUsecase,
     private readonly createCatUsecase: CreateCatUsecase,
+    private readonly updateCatUsecase: UpdateCatUsecase,
   ) {}
 
   @Query(() => [CatModel])
@@ -33,18 +36,9 @@ export class CatsResolver {
     return this.createCatUsecase.execute(props);
   }
 
-  @Mutation(() => String)
-  async updateCat(
-    @Args('id') id: string,
-    @Args('name') name: string,
-    @Args('age') age: number,
-    @Args('breed') breed: string,
-  ) {
-    try {
-      console.log('updateCat', id, name, age, breed);
-    } catch (error) {
-      return error;
-    }
+  @Mutation(() => Cat)
+  async updateCat(@Args('props') props: UpdateCatInput) {
+    return this.updateCatUsecase.execute(props);
   }
   @Mutation(() => String)
   async deleteCat(@Args('id') id: string) {
