@@ -40,4 +40,9 @@ export class Cat extends BaseEntity {
     nullable: true,
   })
   breed?: string; // TODO stringではない方がより良い
+
+  /** CatEntityの更新 */
+  update(props: Partial<Cat>) {
+    super.update({ ...props });
+  }
 }

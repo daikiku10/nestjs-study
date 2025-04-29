@@ -4,6 +4,7 @@ import { Optional } from 'utility-types';
 import { ObjectIdColumn } from 'typeorm';
 import { IdColumn } from '../decorators/property/id-column.decorator';
 import { generateUniqId } from '../utils/id/generateUniqId';
+import { assignDefined } from '../utils/object/assignDefined';
 
 @ObjectType({
   isAbstract: true,
@@ -35,4 +36,10 @@ export class BaseEntity<T = any> extends BaseModel {
     description: 'ID',
   })
   id: string;
+
+  protected update(props: Partial<BaseEntity & T>) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { _id, id, ...rest } = props;
+    assignDefined(this, rest);
+  }
 }
