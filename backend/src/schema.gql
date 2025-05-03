@@ -16,23 +16,9 @@ type Cat {
   breed: String
 }
 
-type CatModel {
-  """猫ID"""
-  id: ID!
-
-  """名前"""
-  name: String!
-
-  """年齢"""
-  age: Int!
-
-  """品種"""
-  breed: String
-}
-
 type Query {
-  getAllCats: [CatModel!]!
-  getCatById(id: String!): CatModel!
+  getAllCats: [Cat!]!
+  getCatById(id: ID!): Cat!
 }
 
 type Mutation {

@@ -1,34 +1,31 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GetCatsUsecase } from './usecase/get-cats.usecase';
 
 import { Cat } from 'src/domains/cat/cat.entity';
-import { CatModel } from 'src/domains/cat/cat.model';
 import { CreateCatUsecase } from './usecase/create-cat.usecase';
 import { CreateCatInput } from './models/create-cat.input';
 import { UpdateCatInput } from './models/update-cat.input';
 import { UpdateCatUsecase } from './usecase/update-cat.usecase';
+import { CatId } from 'src/domains/cat/cat-id.model';
+import { GetCatUsecase } from './usecase/get-cat.usecase';
 
 @Resolver()
 export class CatsResolver {
   constructor(
+    private readonly getCatUsecase: GetCatUsecase,
     private readonly getCatsUsecase: GetCatsUsecase,
     private readonly createCatUsecase: CreateCatUsecase,
     private readonly updateCatUsecase: UpdateCatUsecase,
   ) {}
 
-  @Query(() => [CatModel])
+  @Query(() => [Cat])
   async getAllCats(): Promise<Cat[]> {
     return this.getCatsUsecase.execute();
   }
 
-  @Query(() => CatModel)
-  async getCatById(@Args('id') id: string): Promise<CatModel> {
-    try {
-      console.log('getCatById', id);
-    } catch (error) {
-      console.log('error', error);
-      return undefined;
-    }
+  @Query(() => Cat)
+  async getCatById(@Args('id', { type: () => ID }) id: CatId): Promise<Cat> {
+    return this.getCatUsecase.execute(id);
   }
 
   @Mutation(() => Cat)
