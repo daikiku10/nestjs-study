@@ -6,6 +6,9 @@ type Cat {
   """猫ID"""
   id: ID!
 
+  """削除日時"""
+  deletedAt: DateTime
+
   """名前"""
   name: String!
 
@@ -16,6 +19,11 @@ type Cat {
   breed: String
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Query {
   getAllCats: [Cat!]!
   getCatById(id: ID!): Cat!
@@ -24,7 +32,7 @@ type Query {
 type Mutation {
   createCat(props: CreateCatInput!): Cat!
   updateCat(props: UpdateCatInput!): Cat!
-  deleteCat(id: String!): String!
+  deleteCat(id: ID!): String!
 }
 
 input CreateCatInput {

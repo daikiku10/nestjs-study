@@ -8,6 +8,7 @@ import { UpdateCatInput } from './models/update-cat.input';
 import { UpdateCatUsecase } from './usecase/update-cat.usecase';
 import { CatId } from 'src/domains/cat/cat-id.model';
 import { GetCatUsecase } from './usecase/get-cat.usecase';
+import { DeleteCatUsecase } from './usecase/delete-cat.usecase';
 
 @Resolver()
 export class CatsResolver {
@@ -16,6 +17,7 @@ export class CatsResolver {
     private readonly getCatsUsecase: GetCatsUsecase,
     private readonly createCatUsecase: CreateCatUsecase,
     private readonly updateCatUsecase: UpdateCatUsecase,
+    private readonly deleteCatUsecase: DeleteCatUsecase,
   ) {}
 
   @Query(() => [Cat])
@@ -37,12 +39,9 @@ export class CatsResolver {
   async updateCat(@Args('props') props: UpdateCatInput) {
     return this.updateCatUsecase.execute(props);
   }
+
   @Mutation(() => String)
-  async deleteCat(@Args('id') id: string) {
-    try {
-      console.log('deleteCat', id);
-    } catch (error) {
-      return error;
-    }
+  async deleteCat(@Args('id', { type: () => ID }) id: CatId): Promise<boolean> {
+    return this.deleteCatUsecase.execute(id);
   }
 }
