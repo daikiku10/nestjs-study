@@ -1,10 +1,11 @@
 import { HideField, ObjectType } from '@nestjs/graphql';
 import { BaseModel } from './base.model';
 import { Optional } from 'utility-types';
-import { ObjectIdColumn } from 'typeorm';
+import { DeleteDateColumn, ObjectIdColumn } from 'typeorm';
 import { IdColumn } from '../decorators/property/id-column.decorator';
 import { generateUniqId } from '../utils/id/generateUniqId';
 import { assignDefined } from '../utils/object/assignDefined';
+import { DateField } from '../decorators/property/date-field.decorator';
 
 @ObjectType({
   isAbstract: true,
@@ -19,7 +20,7 @@ export class BaseEntity<T = any> extends BaseModel {
     if (props) {
       this._id = this.id = props.id || generateUniqId();
     }
-    // TODO: deletedAtの追加
+    this.deletedAt = props?.deletedAt ?? null;
   }
 
   /**
@@ -36,6 +37,16 @@ export class BaseEntity<T = any> extends BaseModel {
     description: 'ID',
   })
   id: string;
+
+  /**
+   * 削除日時
+   */
+  @DeleteDateColumn()
+  @DateField({
+    description: '削除日時',
+    nullable: true,
+  })
+  deletedAt?: Date | null;
 
   protected update(props: Partial<BaseEntity & T>) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
