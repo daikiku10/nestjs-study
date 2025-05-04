@@ -1,4 +1,4 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { ObjectType } from '@nestjs/graphql';
 import { IdColumn } from 'src/common/decorators/property/id-column.decorator';
 import { IntColumn } from 'src/common/decorators/property/int-column.decorator';
 import { StringColumn } from 'src/common/decorators/property/string-column.decorator';
@@ -29,7 +29,6 @@ export class Cat extends BaseEntity {
   })
   name: string;
 
-  @Field(() => Int)
   @IntColumn({
     description: '年齢',
   })
