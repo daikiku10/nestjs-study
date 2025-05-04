@@ -1,17 +1,17 @@
 import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { GetCatsUsecase } from './usecase/get-cats.usecase';
+import { GetCatsUsecase } from '../usecase/get-cats.usecase';
 
 import { Cat } from 'src/domains/cat/cat.entity';
-import { CreateCatUsecase } from './usecase/create-cat.usecase';
-import { CreateCatInput } from './models/create-cat.input';
-import { UpdateCatInput } from './models/update-cat.input';
-import { UpdateCatUsecase } from './usecase/update-cat.usecase';
+import { CreateCatUsecase } from '../usecase/create-cat.usecase';
+import { CreateCatInput } from '../models/create-cat.input';
+import { UpdateCatInput } from '../models/update-cat.input';
+import { UpdateCatUsecase } from '../usecase/update-cat.usecase';
 import { CatId } from 'src/domains/cat/cat-id.model';
-import { GetCatUsecase } from './usecase/get-cat.usecase';
-import { DeleteCatUsecase } from './usecase/delete-cat.usecase';
+import { GetCatUsecase } from '../usecase/get-cat.usecase';
+import { DeleteCatUsecase } from '../usecase/delete-cat.usecase';
 
 @Resolver()
-export class CatsResolver {
+export class CatResolver {
   constructor(
     private readonly getCatUsecase: GetCatUsecase,
     private readonly getCatsUsecase: GetCatsUsecase,
