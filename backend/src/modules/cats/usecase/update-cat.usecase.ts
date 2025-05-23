@@ -4,11 +4,12 @@ import { Cat } from 'src/domains/cat/cat.entity';
 import { MongoRepository } from 'typeorm';
 import { UpdateCatInput } from '../models/update-cat.input';
 import { findOne } from 'src/common/utils/typeorm/findOne';
-import { bulkSave } from 'src/common/utils/typeorm/bulkSave';
+import { TransactionService } from 'src/modules/@transaction/services/transaction.service';
 
 @Injectable()
 export class UpdateCatUsecase {
   constructor(
+    private readonly transactionService: TransactionService,
     @InjectRepository(Cat)
     private readonly catRepository: MongoRepository<Cat>,
   ) {}
@@ -24,7 +25,9 @@ export class UpdateCatUsecase {
 
     cat.update(props);
 
-    await bulkSave(this.catRepository, [cat]);
+    await this.transactionService.begin(async ({ bulkSave }) => {
+      await bulkSave(this.catRepository, [cat]);
+    });
 
     return cat;
   }
