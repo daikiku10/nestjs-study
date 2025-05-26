@@ -1,5 +1,9 @@
+import { Optional } from 'utility-types';
+
 export abstract class BaseEvent<T = any> {
-  constructor() {}
+  constructor(props?: Optional<BaseEvent & T>) {
+    Object.assign(this, props);
+  }
 
   data: any | any[];
 
