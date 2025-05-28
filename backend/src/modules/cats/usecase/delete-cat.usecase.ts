@@ -4,12 +4,15 @@ import { findOne } from 'src/common/utils/typeorm/findOne';
 import { CatId } from 'src/domains/cat/cat-id.model';
 import { Cat } from 'src/domains/cat/cat.entity';
 import { MongoRepository } from 'typeorm';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { TransactionService } from 'src/modules/@transaction/services/transaction.service';
+import { CatDeletedEvent } from 'src/events/cat/cat-deleted.event';
 
 @Injectable()
 export class DeleteCatUsecase {
   constructor(
     private readonly transactionService: TransactionService,
+    private readonly eventEmitter: EventEmitter2,
     @InjectRepository(Cat)
     private readonly catRepository: MongoRepository<Cat>,
   ) {}
@@ -25,6 +28,13 @@ export class DeleteCatUsecase {
 
     await this.transactionService.begin(async ({ bulkSoftRemove }) => {
       await bulkSoftRemove(this.catRepository, [cat]);
+
+      await this.eventEmitter.emitAsync(
+        CatDeletedEvent.EventName,
+        new CatDeletedEvent({
+          data: [cat],
+        }),
+      );
     });
 
     return true;

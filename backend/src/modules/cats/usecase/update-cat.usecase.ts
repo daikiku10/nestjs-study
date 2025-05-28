@@ -5,11 +5,14 @@ import { MongoRepository } from 'typeorm';
 import { UpdateCatInput } from '../models/update-cat.input';
 import { findOne } from 'src/common/utils/typeorm/findOne';
 import { TransactionService } from 'src/modules/@transaction/services/transaction.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { CatUpdatedEvent } from 'src/events/cat/cat-updated.event';
 
 @Injectable()
 export class UpdateCatUsecase {
   constructor(
     private readonly transactionService: TransactionService,
+    private readonly eventEmitter: EventEmitter2,
     @InjectRepository(Cat)
     private readonly catRepository: MongoRepository<Cat>,
   ) {}
@@ -27,6 +30,13 @@ export class UpdateCatUsecase {
 
     await this.transactionService.begin(async ({ bulkSave }) => {
       await bulkSave(this.catRepository, [cat]);
+
+      await this.eventEmitter.emitAsync(
+        CatUpdatedEvent.EventName,
+        CatUpdatedEvent.new({
+          data: [cat],
+        }),
+      );
     });
 
     return cat;
