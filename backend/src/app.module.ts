@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { mongodbRoot } from 'src/config/mongodb.config';
 import { LogModule } from './modules/@log/log.module';
@@ -55,6 +56,8 @@ function createMetadata(): ModuleMetadata {
           };
         },
       }),
+      // スケジュールモジュール
+      ScheduleModule.forRoot({}),
       // Mongoose
       MongooseModule.forRoot(mongodbRoot),
       LogModule,
