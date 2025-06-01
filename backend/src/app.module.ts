@@ -1,13 +1,13 @@
-import { Module, ModuleMetadata } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { MongooseModule } from '@nestjs/mongoose';
-import { mongodbRoot } from 'src/config/mongodb.config';
+import { Module, ModuleMetadata } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { CatsModule } from './modules/cats/cat.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { SharelibModule } from './modules/@sharelib/sharelib.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { mongodbRoot } from 'src/config/mongodb.config';
+import { LogModule } from './modules/@log/log.module';
+import { CatsModule } from './modules/cats/cat.module';
 
 function createMetadata(): ModuleMetadata {
   return {
@@ -57,9 +57,9 @@ function createMetadata(): ModuleMetadata {
       }),
       // Mongoose
       MongooseModule.forRoot(mongodbRoot),
+      LogModule,
       // catsモジュール
       CatsModule,
-      SharelibModule,
     ],
   };
 }
