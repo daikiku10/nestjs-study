@@ -1,4 +1,19 @@
 @import "tailwindcss";
+.section {
+  @apply flex gap-4 max-w-[700px] my-8 mx-auto items-center;
+}
+
+.section::before {
+  @apply content-[""] border border-[#d3d3d3] self-stretch;
+}
+
+.section__item {
+  @apply flex-1;
+}
+
+.section__item--start {
+  @apply -order-1;
+}
 
 /* tailwindcssではclip-pathが標準ではないため */
 .hold-overlay {
