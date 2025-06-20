@@ -3,19 +3,26 @@ import ChipPathButton from "../components/ChipPathButton";
 function App() {
   return (
     <div>
-      <div>
+      <header>
         <h1>Cats 管理</h1>
-      </div>
-      <div className="flex items-center justify-center">
-        <ChipPathButton />
-      </div>
+      </header>
 
-      <div className="flex items-center justify-center">
-        <section className="section">
-          <div className="section__item section__item--start">Content1</div>
-          <div className="section__item">Content2</div>
+      <main>
+        <section>
+          <div className="flex items-center justify-center">
+            <ChipPathButton />
+          </div>
         </section>
-      </div>
+
+        <section>
+          <div className="flex items-center justify-center">
+            <section className="section">
+              <div className="section__item section__item--start">Content1</div>
+              <div className="section__item">Content2</div>
+            </section>
+          </div>
+        </section>
+      </main>
     </div>
   );
 }
